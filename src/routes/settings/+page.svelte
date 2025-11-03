@@ -32,5 +32,10 @@
             <input type="text" min="1" bind:value={category} aria-label="Urgent threshold hours" />
             <button class="btn" onclick={save}>Save</button>
         </div>
+        <div class="settings-page-category setting-section">
+            <h4 style="text-align: center;">A Lot Of Implementations and Polishing Still Needed</h4>
+            <h4>Made With Love By</h4>
+            <h4>Akinmade Richard</h4>
+        </div>
     </div>
 </div>

@@ -11,6 +11,10 @@
     const openAddTask = () => {showModal = true;}
 </script>
 
+<svelte:head>
+  <title>Svelte Task Management App</title>
+</svelte:head>
+
 <div class="matrix-container">
     <div class="matrix-container-header">
         <h2>Completed | {$completionPercentage}%</h2>
