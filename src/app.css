@@ -645,7 +645,7 @@ textarea {
     align-items: center;
     background: var(--gradient);
     border-radius: 5px;
-    z-index: 2;
+    z-index: 1;
 }
 
 .find-by-section{
