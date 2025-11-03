@@ -15,13 +15,11 @@
     }
 </script>
     
-    
-    
 <div class="moveForm">
     <p style="text-transform: uppercase;">
         <small><em>Move</em></small>
         <span>{props.task.title}</span> 
-        <small><em>From :</em></small>
+        <small><em>From </em></small>
     </p>
     {#each $tasks as task (task.id)}
         {#if task.id === props.task.id}

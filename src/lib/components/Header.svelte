@@ -3,6 +3,10 @@
 
   let isMobile = $state(false)
   let showMobileMenu = $state(false)
+
+  const closeMobileMenu = () => {
+    showMobileMenu = false
+  }
 </script>
 
 <header class="app-header" aria-label="banner">
