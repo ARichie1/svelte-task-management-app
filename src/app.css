@@ -38,8 +38,8 @@ global {
 }
 body { 
     font-family: "Mulish", sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
+    font-optical-sizing: auto;
+    font-style: normal;
 }
 h1, h2, h3, h4, h5, h6 {padding: 0; margin: 0;}
 ul {list-style: none;padding: 0; margin: 0;}
@@ -89,6 +89,7 @@ input { border: var(--input-border);}
     display: flex;
     flex-direction: column;
     padding: 5px;
+    overflow: hidden;
 }
 
 /* Header  */
