@@ -1,34 +1,31 @@
 <script lang="ts">
 	import "../app.css"
+	import { mobileMenuState } from "$lib/stores/uiStore";
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import Header from '$lib/components/Header.svelte';
-	import { slide } from "svelte/transition";
 
 	let { children } = $props();
 
-	let showMobileMenu = $state(false)
 	let closeMobileMenu = () => {
-		showMobileMenu = false
+		mobileMenuState.update(value => false);
 	}
 	let toggleMobileMenu = () => {
-		showMobileMenu = !showMobileMenu
+		mobileMenuState.update(value => !value);
 	}
 </script>
 
 <div class="app-container">
   <div class="main-content">
-    <Header {showMobileMenu} {closeMobileMenu} {toggleMobileMenu}/>
-	<!-- {#if showMobileMenu} -->
+    <Header {closeMobileMenu} {toggleMobileMenu}/>
 		<button class="page-content-overlay"
-		class:slide-right={showMobileMenu}
+		class:slide-right={$mobileMenuState}
 			onclick={closeMobileMenu} 
 			aria-label="close mobile menu"
 		></button>
-	<!-- {/if} -->
-	<div class="page-content">
-		<Sidebar />
-		{@render children?.()}
-	</div>
+		<div class="page-content">
+			<Sidebar />
+			{@render children?.()}
+		</div>
   </div>
 </div>
 

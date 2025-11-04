@@ -1,11 +1,11 @@
 <script lang="ts">
+	import { mobileMenuState } from "$lib/stores/uiStore";
 
     const props = $props<{
         menu_class?: string;
         closeMobileMenu?: () => void;
-        showMobileMenu?: boolean;
     }>();
-
+    
     const menuItems = [
         {title: "Dashboard", href: "/", id: 0},
         {title: "All Tasks", href: "/tasks", id: 1},
@@ -14,22 +14,15 @@
     ]
 </script>
 
-<nav class={props.menu_class} class:show-mobile={props.showMobileMenu}>
+<nav class={props.menu_class} class:show-mobile={$mobileMenuState}>
     <ul class="navigation">
         {#each menuItems as item (item.id)}
             <li><a href={item.href} class="nav-link"
-                onclick={() => props.showMobileMenu ? props.closeMobileMenu?.() : null}
+                onclick={() => $mobileMenuState ? props.closeMobileMenu?.() : null}
                 >
-                {   item.title}
+                {item.title}
                 </a>
             </li>
         {/each}
       </ul>
 </nav>
-
-<style>
-    .show-mobile{
-        right: 0%;
-        transition: right 0.5s ease;
-    }
-</style>
