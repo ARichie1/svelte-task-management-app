@@ -1,28 +1,35 @@
 <script lang="ts">
-    import { completionPercentage } from '$lib/stores/taskStores';
-    import { tweened } from 'svelte/motion';
 
-    // Access props via $props
     const props = $props<{
-        menu_class: string;
+        menu_class?: string;
+        closeMobileMenu?: () => void;
+        showMobileMenu?: boolean;
     }>();
-    let menu_class = props.menu_class
 
-    let percent = $state(0);
-    const animated = tweened(0, { duration: 400 });
-
-    const unsubscribe = completionPercentage.subscribe((v) => {
-    animated.set(v);
-    });
-
-    animated.subscribe((v) => percent = Math.round(v));
+    const menuItems = [
+        {title: "Dashboard", href: "/", id: 0},
+        {title: "All Tasks", href: "/tasks", id: 1},
+        {title: "Categories", href: "/settings", id: 2},
+        {title: "Settings", href: "/settings", id: 3},
+    ]
 </script>
 
-<nav class={menu_class}>
+<nav class={props.menu_class} class:show-mobile={props.showMobileMenu}>
     <ul class="navigation">
-        <li><a href="/" class="nav-link">Dashboard</a></li>
-        <li><a href="/tasks" class="nav-link">All Tasks</a></li>
-        <li><a href="/settings" class="nav-link">Categories</a></li>
-        <li><a href="/settings" class="nav-link">Settings</a></li>
+        {#each menuItems as item (item.id)}
+            <li><a href={item.href} class="nav-link"
+                onclick={() => props.showMobileMenu ? props.closeMobileMenu?.() : null}
+                >
+                {   item.title}
+                </a>
+            </li>
+        {/each}
       </ul>
 </nav>
+
+<style>
+    .show-mobile{
+        right: 0%;
+        transition: right 0.5s ease;
+    }
+</style>

@@ -1,25 +1,23 @@
 <script lang="ts">
   import Menu from './shared/Menu.svelte';
 
-  let isMobile = $state(false)
-  let showMobileMenu = $state(false)
-
-  const closeMobileMenu = () => {
-    showMobileMenu = false
-  }
+  const props = $props<{
+    showMobileMenu?: boolean;
+    closeMobileMenu?: () => void;
+    toggleMobileMenu?: () => void;
+  }>();
+  
 </script>
 
 <header class="app-header" aria-label="banner">
   <div class="title">Task Manager</div>
 
-  <Menu menu_class="media-mode desktop-mode"/>
+  <Menu menu_class="media-mode desktop-mode" showMobileMenu={props.showMobileMenu} closeMobileMenu={props.closeMobileMenu}/>
 
-  {#if showMobileMenu}
-    <Menu menu_class="media-mode mobile-mode"/>
-  {/if}
+  <Menu menu_class="media-mode mobile-mode" showMobileMenu={props.showMobileMenu} closeMobileMenu={props.closeMobileMenu}/>
 
   <div class="menu-btn-container">
-    <button onclick={() => showMobileMenu = !showMobileMenu}>📑</button>
+    <button onclick={() => props.toggleMobileMenu?.()}>📑</button>
   </div>
 </header>
 

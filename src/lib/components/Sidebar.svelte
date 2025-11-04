@@ -1,18 +1,22 @@
 <script lang="ts">
-    import { tasks, taskStore } from '$lib/stores/taskStores';
+  import { tasks, taskStore } from '$lib/stores/taskStores';
+  import { fly } from 'svelte/transition';
+  
+  const categories = ['All', 'Work', 'Personal', 'Finance'];
 
-    const categories = ['All', 'Work', 'Personal', 'Finance'];
+  const selectCategory = (cat: string) => {
+      // taskStore.setCategory(cat as any);
+  }
 
-    const selectCategory = (cat: string) => {
-        // taskStore.setCategory(cat as any);
-    }
+  let openSidebar = $state(false)
+  let movedSidebar = $state(false)
 
-    let openSidebar = $state(false)
 </script>
 
-<nav class="sidebar" aria-label="Main navigation">
+
+<nav class="sidebar" class:move={openSidebar} aria-label="Main navigation">
   <div class="side-menu-btn-container">
-    <button class="side-menu-btn" onclick={() => openSidebar = !openSidebar}>💨</button>
+    <button class="side-menu-btn" class:rotateBtn={openSidebar} onclick={() => openSidebar = !openSidebar}>💨</button>
   </div>
 
   <div class="sb-section sb-menu">
