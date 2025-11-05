@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+  import { formatDistanceToNow, parseISO, differenceInHours } from 'date-fns';
   import { tasks, taskStore } from '$lib/stores/taskStores';
   import type { Task } from '$lib/stores/types';
   import { fly, fade } from 'svelte/transition';
@@ -76,6 +78,33 @@
       quadrant_title: ""
     };
   }); 
+
+  // Use Reactive Variable To Keep Track Of The Time and Status
+  let dueStatus = $state<"normal" | "dueSoon" | "overdue">("normal");
+  let timeRemaining = $state("");
+
+  // You can make this reactive via settings later
+  const URGENT_HOURS = 48;
+
+  // Calculation The Task Urgency Based Priority and Due Date
+  const updateDueStatus = () => {
+    if (!task.dueDate) return;
+
+    const due = parseISO(task.dueDate);
+    const hoursLeft = differenceInHours(due, new Date());
+    timeRemaining = formatDistanceToNow(due, { addSuffix: true });
+
+    if (hoursLeft <= 0) dueStatus = "overdue";
+    else if (hoursLeft <= URGENT_HOURS) dueStatus = "dueSoon";
+    else dueStatus = "normal";
+  }
+
+  onMount(() => {
+    updateDueStatus();
+    // update periodically (every 5 minutes)
+    const interval = setInterval(updateDueStatus, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  });
 </script>
 
 <article
@@ -94,6 +123,16 @@
     />
     <h3 id={"title-" + task.id}>{task.title}</h3>
   </header>
+
+  {#if dueStatus !== "normal"}
+    <div class="critically-urgent flags">
+      {#if dueStatus === "dueSoon"}
+          <p class="due-soon">Due Soon</p> 
+      {:else if dueStatus === "overdue"}
+          <p class="overdue">Overdue</p>
+        {/if}
+    </div>
+  {/if}
   
   <p class="task-desc">{task.description}</p>
   

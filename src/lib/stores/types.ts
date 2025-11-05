@@ -5,7 +5,7 @@ export interface Task {
   isComplete: boolean;
   isUrgent: boolean;
   isImportant: boolean;
-  dueDate: string; // ISO string
+  dueDate: string; // full ISO string e.g. "2025-11-03T16:30:00.000Z"
   priority: 'High' | 'Medium' | 'Low' | string;
   category: 'Work' | 'Personal' | 'Finance' | string;
   quadrant: "urgent_important" | "notUrgent_important" | "urgent_notImportant" | "notUrgent_notImportant" | string;

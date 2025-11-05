@@ -24,6 +24,7 @@
   let priority = $state(props.initial?.priority ?? props.quadrantToAddTo?.priority ?? "High");
   let category = $state(props.initial?.category ?? "");
   let dueDate = $state(props.initial?.dueDate ?? "");
+  let dueTime = $state("");
   let isUrgent = $state(props.initial?.isUrgent ?? false);
   let isImportant = $state(props.initial?.isImportant ?? false);
   let quadrant = $state(props.initial?.quadrant ?? "");
@@ -46,13 +47,18 @@
   const addTask = (e: Event) => {
     e.preventDefault()
 
+    // Combine date and time into one ISO string
+    const fullDueDate = dueDate && dueTime
+      ? new Date(`${dueDate}T${dueTime}`).toISOString()
+      : "";
+
     const newTask: Task = {
       id: uuid(),
       title,
       description,
       priority: props.isAddingTo ? props.quadrantToAddTo?.priority : "High",
       category,
-      dueDate,
+      dueDate: fullDueDate,
       isUrgent,
       isImportant,
       isComplete: false,
@@ -97,9 +103,10 @@
   </div>
 
   <div class="form-row">
-    <label for="due_date">Due Date</label>
+    <label for="due_date">Due Date and Time</label>
     <div class="input-container">
-      <input type="date" bind:value={dueDate} id="due_date"/>
+      <input type="date" bind:value={dueDate} class="due_date" id="due_date" required />
+      <input type="time" bind:value={dueTime} class="due_time" id="due_time" required />
     </div>
   </div>
 

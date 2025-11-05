@@ -17,6 +17,7 @@ let urgentHours = loadFromLocalStorage<number>(STORAGE_HOURS_KEY, 48);
 
 // Reactive Tasks Store Array
 export const tasks = writable<Task[]>(initialTasks);
+export const urgencyThreshold = writable<number>(48);
 
 // Derived Quadrants Logic
 export const quadrants = derived(tasks, ($tasks) => {
