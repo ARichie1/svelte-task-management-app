@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { formatDistanceToNow, parseISO, differenceInHours } from 'date-fns';
-  import { tasks, taskStore } from '$lib/stores/taskStores';
+  import { tasks, taskStore, urgencyThreshold } from '$lib/stores/taskStores';
   import type { Task } from '$lib/stores/types';
   import { fly, fade } from 'svelte/transition';
   import { filterPanelState } from '$lib/stores/uiStore';
@@ -82,9 +82,6 @@
   let dueStatus = $state<"normal" | "dueSoon" | "overdue">("normal");
   let timeRemaining = $state("");
 
-  // You can make this reactive via settings later
-  const URGENT_HOURS = 48;
-
   // Calculation The Task Urgency Based Priority and Due Date
   const updateDueStatus = () => {
     if (!task.dueDate) return;
@@ -94,7 +91,7 @@
     timeRemaining = formatDistanceToNow(due, { addSuffix: true });
 
     if (hoursLeft <= 0) dueStatus = "overdue";
-    else if (hoursLeft <= URGENT_HOURS) dueStatus = "dueSoon";
+    else if (hoursLeft <= $urgencyThreshold) dueStatus = "dueSoon";
     else dueStatus = "normal";
   }
 

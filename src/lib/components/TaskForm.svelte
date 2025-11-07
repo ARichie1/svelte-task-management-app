@@ -23,12 +23,29 @@
   let description = $state(props.initial?.description ?? "");
   let priority = $state(props.initial?.priority ?? props.quadrantToAddTo?.priority ?? "High");
   let category = $state(props.initial?.category ?? "");
-  let dueDate = $state(props.initial?.dueDate ?? "");
-  let dueTime = $state("");
   let isUrgent = $state(props.initial?.isUrgent ?? false);
   let isImportant = $state(props.initial?.isImportant ?? false);
   let quadrant = $state(props.initial?.quadrant ?? "");
   let quadrant_title = $state(props.initial?.quadrant_title ?? "");
+
+  // Split dueDate Into Date and Time For Task Editing
+  let dueDate = $state("");
+  let dueTime = $state("");
+
+  // If Editing and Task Has A DueDate
+  if (props.initial?.dueDate) {
+    const dateObj = new Date(props.initial.dueDate);
+    dueDate = dateObj.toISOString().slice(0, 10); // YYYY-MM-DD
+    dueTime = dateObj.toISOString().slice(11, 16); // HH:mm
+  }
+
+  // Merge Date + Time Into A Full ISO string
+  const mergeDateTime = (date: string, time: string): string | null => {
+    if (!date) return null;
+    // Fallback To Midnight
+    if (!time) time = "00:00"; 
+    return new Date(`${date}T${time}`).toISOString();
+  };
 
   let isAddingTo = $state(props.isAddingTo)
   let isEditing = $state(props.isEditing)
@@ -48,9 +65,7 @@
     e.preventDefault()
 
     // Combine date and time into one ISO string
-    const fullDueDate = dueDate && dueTime
-      ? new Date(`${dueDate}T${dueTime}`).toISOString()
-      : "";
+    const fullDueDate = mergeDateTime(dueDate, dueTime);
 
     const newTask: Task = {
       id: uuid(),
@@ -58,7 +73,7 @@
       description,
       priority: props.isAddingTo ? props.quadrantToAddTo?.priority : priority,
       category,
-      dueDate: fullDueDate,
+      dueDate: fullDueDate ?? "",
       isUrgent,
       isImportant,
       isComplete: false,
