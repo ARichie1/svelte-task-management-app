@@ -13,7 +13,7 @@
 
   // Reactively Derive Tasks From The Global Store
   const tasks = derived(taskStore, $tasks =>
-    $tasks.filter(t => t.quadrant === props.info.key)
+    $tasks.filter(t => t.priority === props.info.priority)
   );
 
   let showModal = $state(false)

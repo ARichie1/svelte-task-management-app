@@ -1,6 +1,6 @@
 <script lang="ts">
     import { derived } from 'svelte/store';
-    import { taskStore } from '$lib/stores/taskStores';
+    import { taskStore, quadrants } from '$lib/stores/taskStores';
     import TaskCard from "../TaskCard.svelte";
 
     // Access Props Via $props
@@ -26,7 +26,7 @@
 
     // Reactively derive tasks from the global store
     const tasks = derived(taskStore, $tasks =>
-      $tasks.filter(t => t.quadrant === props.info.key)
+      $tasks.filter(t => t.priority === props.info.priority)
     );
 
     // Toogle Nav Buttons Dependent On Available

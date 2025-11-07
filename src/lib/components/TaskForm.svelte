@@ -56,7 +56,7 @@
       id: uuid(),
       title,
       description,
-      priority: props.isAddingTo ? props.quadrantToAddTo?.priority : "High",
+      priority: props.isAddingTo ? props.quadrantToAddTo?.priority : priority,
       category,
       dueDate: fullDueDate,
       isUrgent,
