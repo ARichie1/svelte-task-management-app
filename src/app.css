@@ -653,8 +653,21 @@ textarea {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-left: 0;
-    margin-left: 10px;
+    padding-left: 8px;
+}
+.tasks-page-header .right-side{
+    width: 60%; height: 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 8px;
+}
+.tasks-page-header h3{
+    flex-basis: 50%;
+}
+.tasks-page-header button{
+    height: 30px;
+    font-weight: bold;
 }
 .tasks-page-body{
     width: 100%; height: 91%;
