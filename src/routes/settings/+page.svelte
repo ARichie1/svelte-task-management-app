@@ -23,7 +23,8 @@
     </div>
     <div class="settings-page-body">
         <div class="settings-page-urgent setting-section">
-            <h4>Urgent threshold (hours)</h4>
+            <h4>Urgent Threshold (hours)</h4>
+            <p>Set the time you want to see the "Due Soon" message before a tasks is due. </p>
             <input type="number" min="1" bind:value={urgentHours} aria-label="Urgent threshold hours" />
             <button class="btn" onclick={saveUrgency}>Save</button>
         </div>
