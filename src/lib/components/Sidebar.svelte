@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { tasks } from '$lib/stores/taskStores';
-  import { selectedCategories} from '$lib/utils/findTasks';
+  import { selectedCategories } from '$lib/utils/findTasks';
     
   const categories = ['All', 'Work', 'Personal', 'Finance'];
 
@@ -14,8 +14,6 @@
   }
 
   let openSidebar = $state(false)
-  let movedSidebar = $state(false)
-
 </script>
 
 
@@ -31,7 +29,7 @@
       <h4 class="openedSidebar"><span>📑</span>Menu</h4>
       <ul class="navigation">
         <li><a href="/" class="nav-link">Dashboard</a></li>
-        <li><a href="/tasks" class="nav-link">All Tasks</a></li>
+        <li><a onclick={() => selectedCategories.update(list => [])} href="/tasks" class="nav-link">All Tasks</a></li>
         <li><a href="/settings" class="nav-link">Settings</a></li>
       </ul>
     {/if}
