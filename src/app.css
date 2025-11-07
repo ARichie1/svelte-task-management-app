@@ -676,7 +676,6 @@ textarea {
     width: 100%; height: 10%;
     display: flex; justify-content: space-between;
     align-items: center;
-    z-index: 2;
 }
 .tasks-page-body-container .find .searchbar{
     width: 60%; height: 30px;
@@ -709,7 +708,7 @@ textarea {
     align-items: center;
     background: var(--gradient);
     border-radius: 5px;
-    z-index: 1;
+    z-index: 2;
 }
 
 .find-by-section{
@@ -719,10 +718,15 @@ textarea {
     flex-direction: column;
     gap: 10px;
     margin: 10px;
+    flex-basis: 33%;
 }
 
 .tasks-page-body-container 
-.find .find-by .filter input{
+.find .find-by .filter{
+    flex-basis: 50%;
+}
+.tasks-page-body-container 
+.find .find-by input{
     width: 15px; height: 15px;
     cursor: pointer;
 }

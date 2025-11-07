@@ -4,7 +4,8 @@
   import { tasks, taskStore } from '$lib/stores/taskStores';
   import type { Task } from '$lib/stores/types';
   import { fly, fade } from 'svelte/transition';
- 
+  import { filterPanelState } from '$lib/stores/uiStore';
+
   import Modal from './shared/Modal.svelte';
   import MoveTask from './shared/MoveTask.svelte';
   import ConfirmDelete from './shared/ConfirmDelete.svelte';
@@ -37,16 +38,19 @@
   const openMove = () => {
     moving = true; 
     showModal = true;
+    filterPanelState.update(value => false)
   }
   const openEdit = (id: string) => { 
     console.log(id);
     editing = true; 
     taskToEdit = id;
     showModal = true;
+    filterPanelState.update(value => false)
   }
   const openDelete = (task: Task) => { 
     deleting = true;  
-    showModal = true; 
+    showModal = true;
+    filterPanelState.update(value => false) 
   }
 
   // Callbacks, Fast Implementations Directly In The Tasks Store

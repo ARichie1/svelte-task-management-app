@@ -1,7 +1,6 @@
 <script lang="ts">
     import { urgencyThreshold, taskStore } from '$lib/stores/taskStores';
     import { onMount } from 'svelte';
-    import { get } from 'svelte/store';
     
     let urgentHours = $state($urgencyThreshold);
     let category = $state("");
@@ -32,6 +31,11 @@
             <h4>Add A Category</h4>
             <input type="text" min="1" bind:value={category} aria-label="Urgent threshold hours" />
             <button class="btn" onclick={addNewCategory}>Save</button>
+        </div>
+        <div class="settings-page-category setting-section">
+            <ul>
+                <li></li>
+            </ul>
         </div>
         <div class="settings-page-category setting-section">
             <h4 style="text-align: center;">A Lot Of Implementations and Polishing Still Needed</h4>

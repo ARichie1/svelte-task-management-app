@@ -20,7 +20,7 @@
         display:flex;align-items:center;
         justify-content:center;
         background:rgba(2,6,23,0.4);
-        z-index:500;
+        z-index: 5;
     }
 
     .modal{

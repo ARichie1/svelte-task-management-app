@@ -110,12 +110,12 @@ export const taskStore = {
     console.log("added multiple tasks");
 	},
 
-// Change A Task’s Category
+	// Change A Task’s Category
 	setCategory: (id: string, category: string) => {
 		tasks.update((current) =>
 			current.map((t) => (t.id === id ? { ...t, category } : t))
 		);
-    console.log("just gave a task a category");
+    	console.log("just gave a task a category");
 	},
 
   // Change The Number Of Hours That Define What “Urgent” Is

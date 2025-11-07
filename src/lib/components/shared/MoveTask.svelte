@@ -53,10 +53,11 @@
     p{word-spacing: 10px;}
     small {text-transform: lowercase;}
     .current-quadrant{
-        height: 30px; width: 250px;
+        height: 40px; width: 250px;
         display: flex;
         justify-content: center;
         align-items: center;
+        text-align: center;
         text-transform: uppercase;
         background: ghostwhite;
         border-radius: 5px;

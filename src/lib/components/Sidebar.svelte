@@ -1,11 +1,16 @@
 <script lang="ts">
-  import { tasks, taskStore } from '$lib/stores/taskStores';
-  import { fly } from 'svelte/transition';
-  
+  import { goto } from '$app/navigation';
+  import { tasks } from '$lib/stores/taskStores';
+  import { selectedCategories} from '$lib/utils/findTasks';
+    
   const categories = ['All', 'Work', 'Personal', 'Finance'];
 
-  const selectCategory = (cat: string) => {
-      // taskStore.setCategory(cat as any);
+  const selectCategory = (category: string) => {
+      selectedCategories.update(list => [])
+      if (category !== "All") {
+        selectedCategories.update(list => [...list, category])
+      }
+      goto('/tasks')
   }
 
   let openSidebar = $state(false)
@@ -37,9 +42,10 @@
     {:else}
       <h4 class="openedSidebar"><span>📂</span>Categories</h4>
       <ul>
-        {#each categories as c}
+        {#each categories as category}
           <li>
-            <button onclick={() => selectCategory(c)} aria-label={`Filter by ${c}`}>{c}</button>
+            <button onclick={() => selectCategory(category)} 
+              aria-label={`Filter by ${category}`}>{category}</button>
           </li>
         {/each}
       </ul>

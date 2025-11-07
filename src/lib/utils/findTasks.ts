@@ -1,4 +1,5 @@
 import type { Task } from '../stores/types';
+import { writable } from 'svelte/store';
 
 export type TaskFilters = {
     searchQuery: string;
@@ -8,14 +9,26 @@ export type TaskFilters = {
     filterLow: boolean;
     filterVeryLow: boolean;
     sortOption: string;
+    // Dynamic Category Filters
+    selectedCategories: string[]; 
 };
+
+// Make Each User Input Its Own Store
+export const searchQuery = writable('');
+export const filterCompletion = writable(false);
+export const filterHigh = writable(false);
+export const filterMedium = writable(false);
+export const filterLow = writable(false);
+export const filterVeryLow = writable(false);
+export const sortOption = writable('Time');
+export const selectedCategories = writable<string[]>([]);
 
 export function findTasks(tasks: Task[], filters: TaskFilters): Task[] {
     const { 
         searchQuery, 
         filterCompletion, filterHigh, 
         filterMedium, filterLow, 
-        filterVeryLow, sortOption } = filters;
+        filterVeryLow, sortOption, selectedCategories  } = filters;
 
     // Search
     let result = tasks.filter(task =>
@@ -25,13 +38,18 @@ export function findTasks(tasks: Task[], filters: TaskFilters): Task[] {
 
     // Filter
     result = result.filter(task => {
-    const completionCheck = !filterCompletion || task.isComplete;
-    const priorityCheck =
-        (!filterHigh || task.priority === 'High') &&
-        (!filterMedium || task.priority === 'Medium') &&
-        (!filterLow || task.priority === 'Low') &&
-        (!filterVeryLow || task.priority === 'VeryLow');
-    return completionCheck && priorityCheck;
+        const completionCheck = !filterCompletion || task.isComplete;
+        const priorityCheck =
+            (!filterHigh || task.priority === 'High') &&
+            (!filterMedium || task.priority === 'Medium') &&
+            (!filterLow || task.priority === 'Low') &&
+            (!filterVeryLow || task.priority === 'VeryLow');
+
+        const categoryCheck =
+            selectedCategories.length === 0 ||
+            selectedCategories.includes(task.category);
+
+        return completionCheck && priorityCheck && categoryCheck
     });
 
     // Sort
