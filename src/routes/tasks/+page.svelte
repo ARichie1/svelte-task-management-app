@@ -1,12 +1,14 @@
 <script lang="ts">
-  import { tasks } from '$lib/stores/taskStores';
-  import { filterPanelState } from '$lib/stores/uiStore';
-  import TaskCard from '$lib/components/TaskCard.svelte';
   import { derived } from 'svelte/store';
+  import { tasks, taskStore } from '$lib/stores/taskStores';
+  import { filterPanelState } from '$lib/stores/uiStore';
   import { findTasks, searchQuery, filterCompletion,
     filterHigh, filterMedium, filterLow, filterVeryLow, 
     sortOption, selectedCategories
-   } from '$lib/utils/findTasks';
+  } from '$lib/utils/findTasks';
+  import TaskCard from '$lib/components/TaskCard.svelte';
+  import Modal from '$lib/components/shared/Modal.svelte';
+  import ConfirmDelete from '$lib/components/shared/ConfirmDelete.svelte';
 
   // Derive All Unique Categories From Tasks
   const categories = derived(tasks, $tasks => 
@@ -32,6 +34,27 @@
   let toggleFilterPanel = () => {
 		filterPanelState.update(value => !value);
 	}
+
+  let deleting = $state(false)
+  let showModal = $state(false)
+  
+  // Closes and Resets Modal
+  let handleCancel = () => {
+    showModal = false
+    deleting = false 
+  }
+
+  const openDelete = () => { 
+    deleting = true;  
+    showModal = true;
+    filterPanelState.update(value => false) 
+  }
+
+  const deleteAllTasks = () => { 
+    taskStore.resetTasks()
+    console.log("deleted all current tasks");
+    handleCancel()
+  }
 </script>
 
 <div class="tasks-page-body-container">
@@ -45,6 +68,10 @@
           onclick={() => toggleFilterPanel()}>
           Filter or Sort 
         </button>
+    </div>
+
+    <div class="deleteAllTasks">
+      <button class="btn delete" onclick={() => {openDelete()}} aria-label="Delete All Tasks">🗑</button>
     </div>
 
     {#if $filterPanelState}
@@ -107,3 +134,9 @@
     </div>
   {/if}
 </div>
+
+<Modal open={showModal} onClose={handleCancel}>
+  {#if deleting}
+    <ConfirmDelete onCancel={handleCancel} onDelete={deleteAllTasks}/>
+  {/if}
+</Modal>

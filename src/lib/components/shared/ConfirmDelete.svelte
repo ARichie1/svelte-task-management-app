@@ -3,21 +3,24 @@
      const props = $props<{
         onCancel?: () => void;
         onDelete?: (id: string) => void;
-        taskToDelete: Task;
+        taskToDelete?: Task;
     }>();
 </script>
     
-    
-    
 <div class="deleteForm">
-    <h3 style="text-transform: uppercase; text-align:center;">
-        Are You Want To Delete This Task ?</h3>
-    <div class="task-to-delete">
-        <p>{props.taskToDelete.title}</p>
-    </div>
+    {#if props.taskToDelete}
+        <h3 style="text-transform: uppercase; text-align:center;">
+            Are You Want To Delete This Task ?</h3>
+        <div class="task-to-delete">
+            <p>{props.taskToDelete.title}</p>
+        </div>
+    {:else}
+         <h3 style="text-transform: uppercase; text-align:center;">
+            You About To Delete All Your Tasks ?</h3>
+    {/if}
     <div class="button-container">
         <button class="btn ghost small" onclick={() => props.onCancel?.()}>Cancel</button>
-        <button class="btn small delete" onclick={() => props.onDelete?.(props.taskToDelete.id)}>Delete</button>
+        <button class="btn small delete" onclick={() => {props.taskToDelete ? props.onDelete?.(props.taskToDelete.id) : props.onDelete?.()}}>Delete</button>
     </div>
 </div>
 

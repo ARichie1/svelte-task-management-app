@@ -1,17 +1,17 @@
 <script lang="ts">
-    import {tasks} from "$lib/stores/taskStores"
+    import {tasks, taskStore} from "$lib/stores/taskStores"
     import {validQuadrants, type Task, checkPriority} from "$lib/stores/types"
 
     const props = $props<{
         onCancel?: () => void;
-        onMove?: (id: string, task: Task) => void;
+        onMove?: (id: string, priority:string) => void;
         task: Task;
     }>();
 
     // Check The Selected Quadrant Priority And Move
     const moveTo = (newPriority: string) => {
-        let newQuadrantConfig = checkPriority(newPriority)
-        props.onMove?.(props.task.id, {...props.task, ...newQuadrantConfig});
+        // let newQuadrantConfig = checkPriority(newPriority)
+        props.onMove?.(props.task.id, newPriority);
     }
 </script>
     
@@ -29,7 +29,7 @@
     <p><small><em>To</em></small></p>
     <ul class="quadrant-list">
         {#each validQuadrants as quadrant (quadrant.id)}
-            {#if quadrant.title !== props.task.quadrant_title}
+            {#if quadrant.priority !== props.task.priority}
                 <li>
                     <button class="btn" onclick={() => {moveTo(quadrant.priority)}}>
                         {quadrant.title}
@@ -69,8 +69,11 @@
         align-items: center;
         gap: 10px;
     }
+    .quadrant-list li{
+        width: auto; height: 30px;
+    }
     .quadrant-list button{
-        height: 30px;
+        height: 100%; width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;

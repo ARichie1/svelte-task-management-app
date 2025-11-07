@@ -81,7 +81,7 @@ export const sampleTasks: Task[] = [
   },
   {
     id: '7',
-    title: 'Call Grandma',
+    title: 'Call Dad',
     description: 'Check in and have a chat.',
     isComplete: true,
     dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(), // 5 days from now
@@ -94,11 +94,11 @@ export const sampleTasks: Task[] = [
   },
   {
     id: '8',
-    title: 'Call Grandma',
-    description: 'Check in and have a chat.',
+    title: 'Call Mum',
+    description: 'Send Some Cheese.',
     isComplete: true,
     dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(), // 5 days from now
-    priority: 'Very Low',
+    priority: 'Low',
     category: 'Personal',
     isUrgent: false,
     isImportant: true,
@@ -108,10 +108,10 @@ export const sampleTasks: Task[] = [
   {
     id: '9',
     title: 'Call Grandma',
-    description: 'Check in and have a chat.',
+    description: 'Call Her, make her laugh.',
     isComplete: true,
     dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(), // 5 days from now
-    priority: 'Low',
+    priority: 'Very Low',
     category: 'Personal',
     isUrgent: false,
     isImportant: true,
@@ -120,8 +120,8 @@ export const sampleTasks: Task[] = [
   },
   {
     id: '10',
-    title: 'Call Grandma',
-    description: 'Check in and have a chat.',
+    title: 'Go On A Trip',
+    description: 'Mount Everest Here I Come.',
     isComplete: true,
     dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(), // 5 days from now
     priority: 'Very Low',

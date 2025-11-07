@@ -54,7 +54,7 @@ input { border: var(--input-border);}
     cursor: pointer;
 }
 .btn:hover{background: var(--gradient);}
-.btn:active{scale: 0.8}
+.btn:active{scale: 0.9}
 
 .add {background: var(--add);}
 .delete {background: var(--delete);}
@@ -670,6 +670,14 @@ textarea {
     margin-left: 10px;
     z-index: 1;
     overflow-y: hidden;
+}
+.tasks-page-body-container .deleteAllTasks{
+    display: flex;
+    width: 30px; height: 29px;
+}
+.tasks-page-body-container .deleteAllTasks button{
+    width: 100%; height: 100%;
+    font-size: 18px;
 }
 .tasks-page-body-container .find{
     position: relative;

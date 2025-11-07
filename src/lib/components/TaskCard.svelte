@@ -12,12 +12,7 @@
   import TaskForm from './TaskForm.svelte';
   
   // Access props via $props
-  const props = $props<{
-    task: Task;
-    onToggle?: (id: string) => void;
-    onEdit?: (id: string) => void;
-    onDelete?: (id: string) => void;
-  }>();
+  const props = $props<{task: Task;}>();
 
   const task = props.task;
 
@@ -59,9 +54,9 @@
     console.log("Completed Task");
   }
 
-  const moveTask = (id:string, task: Task) => {
+  const moveTask = (id:string, newPriority:string) => {
     console.log("moving");
-    taskStore.editTask(id, task);
+    taskStore.setTaskQuadrant(id, newPriority)
     handleCancel()
   }
 
@@ -156,7 +151,7 @@
   </div>
 </article>
 
-<!-- Modal Used To ADD or EDIT a User -->
+<!-- Modal Used To ADD Or EDIT A Task -->
 <Modal open={showModal} onClose={handleCancel}>
   {#if moving}
     <MoveTask onCancel={handleCancel} onMove={moveTask} {task}/>

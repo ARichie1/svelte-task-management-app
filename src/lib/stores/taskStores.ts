@@ -1,15 +1,24 @@
 import { browser } from '$app/environment';
 import { writable, derived } from 'svelte/store';
 import type { Task, Quadrants } from './types';
+import { checkPriority } from './types';
 import { loadFromLocalStorage, saveToLocalStorage } from '$lib/utils/storage';
 import { debounce } from '$lib/utils/debounce';
-import { sampleTasks } from '$lib/utils/sampleData'; 
+import { sampleTasks } from '$lib/utils/sampleData';
 
 const STORAGE_KEY = 'task_manager_tasks';
 const STORAGE_HOURS_KEY = 'task_manager_urgent_hours';
 
 // LocalStorage Initialization
 // Load Persisted Tasks Or Fallback To Sample Data
+
+// For Dev Mode
+const devInitTasks = loadFromLocalStorage<Task[]>(STORAGE_KEY, sampleTasks)
+if (devInitTasks.length === 0) {
+	saveToLocalStorage(STORAGE_KEY, sampleTasks);
+}
+
+// For Production
 const initialTasks = browser
 	? loadFromLocalStorage<Task[]>(STORAGE_KEY, sampleTasks)
 	: sampleTasks;
@@ -77,7 +86,7 @@ export const taskStore = {
 	// Add new task
 	addTask: (task: Task) => {
 		tasks.update((current) => [...current, task]);
-    console.log("adding new task");
+    	console.log("adding new task");
 	},
 
   // Edit specific fields of a task
@@ -85,7 +94,7 @@ export const taskStore = {
 		tasks.update((current) =>
 			current.map((t) => (t.id === id ? { ...t, ...updatedFields } : t))
 		);
-    console.log("edited a task");
+    	console.log("edited a task");
 	},
 
 	// Toggle completion
@@ -95,19 +104,19 @@ export const taskStore = {
 				t.id === id ? { ...t, isComplete: !t.isComplete } : t
 			)
 		);
-    console.log("toggling completion");
+    	console.log("toggling completion");
 	},
 
 	// Delete A Task
 	deleteTask: (id: string) => {
 		tasks.update((current) => current.filter((t) => t.id !== id));
-    console.log("deleted a task");
-  },
+    	console.log("deleted a task");
+	},
 
 	// Replace All Tasks
 	setTasks: (newTasks: Task[]) => {
 		tasks.set(newTasks);
-    console.log("added multiple tasks");
+    	console.log("added multiple tasks");
 	},
 
 	// Change A Task’s Category
@@ -132,16 +141,21 @@ export const taskStore = {
 	},
 
   // Change A Task's Quadrant
-	setTaskQuadrant: (id: string, quadrant: Task['quadrant']) => {
+	setTaskQuadrant: (id: string, newPriority:string) => {
+		const newQuadrantConfig = checkPriority(newPriority)
+		console.log(id);
+		console.log(newQuadrantConfig);
+
 		tasks.update((current) =>
-			current.map((t) => (t.id === id ? { ...t, quadrant } : t))
+			current.map((t) => (t.id === id ? { ...t, ...newQuadrantConfig } : t)
+			)
 		);
 	},
 
 	// Clear all tasks and restore defaults
 	resetTasks: () => {
-		tasks.set(sampleTasks);
-		saveToLocalStorage(STORAGE_KEY, sampleTasks);
+		tasks.set([]);
+		saveToLocalStorage(STORAGE_KEY, []);
 	}
 };
 

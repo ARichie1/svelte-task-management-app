@@ -6,7 +6,7 @@ export interface Task {
   isUrgent: boolean;
   isImportant: boolean;
   dueDate: string; // full ISO string e.g. "2025-11-03T16:30:00.000Z"
-  priority: 'High' | 'Medium' | 'Low' | string;
+  priority: 'High' | 'Medium' | 'Low' | 'Very Low' | string;
   category: 'Work' | 'Personal' | 'Finance' | string;
   quadrant: "urgent_important" | "notUrgent_important" | "urgent_notImportant" | "notUrgent_notImportant" | string;
   quadrant_title: "Urgent And Important" | "Urgent And Not Important" | "Not Urgent And Important" | "Not Urgent And Not Important" | string;
@@ -28,6 +28,7 @@ export const validQuadrants = [
 
 export const checkPriority = (priority:string) => {
     let priorityConfig = {
+      priority: "",
       isUrgent: false,
       isImportant: false,
       quadrant: "",
@@ -35,14 +36,16 @@ export const checkPriority = (priority:string) => {
     }
     if (priority === "High") {
       priorityConfig = {
+        priority,
         isUrgent: true,
         isImportant: true,
         quadrant: "urgent_important",
-        quadrant_title: "Urgent Important",
+        quadrant_title: "Urgent And Important",
       }
     }
     else if (priority === "Medium") {
       priorityConfig = { 
+        priority,
         isUrgent: true,
         isImportant: false,
         quadrant: "urgent_notImportant",
@@ -51,14 +54,16 @@ export const checkPriority = (priority:string) => {
     }
     else if (priority === "Low") {
       priorityConfig = {
+        priority,
         isUrgent: false,
         isImportant: true,
         quadrant: "notUrgent_important",
-        quadrant_title: "Not Urgent But Important"
+        quadrant_title: "Not Urgent And Important"
       }
     }
     else if (priority === "Very Low") {
       priorityConfig = {
+        priority,
         isUrgent: false,
         isImportant: false,
         quadrant: "notUrgent_notImportant",
