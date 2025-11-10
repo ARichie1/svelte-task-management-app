@@ -12,21 +12,25 @@ const STORAGE_HOURS_KEY = 'task_manager_urgent_hours';
 // LocalStorage Initialization
 // Load Persisted Tasks Or Fallback To Sample Data
 
-// For Dev Mode
+// For Test Mode With Data On Reload
 const devInitTasks = loadFromLocalStorage<Task[]>(STORAGE_KEY, sampleTasks)
 if (devInitTasks.length === 0) {
 	saveToLocalStorage(STORAGE_KEY, sampleTasks);
 }
 
-// For Production
+// For Test Mode Without Data On Reload
 const initialTasks = browser
 	? loadFromLocalStorage<Task[]>(STORAGE_KEY, sampleTasks)
 	: sampleTasks;
+const initialDueHours = browser
+	? loadFromLocalStorage<number>(STORAGE_HOURS_KEY, 48)
+	: 48;
+
 let urgentHours = loadFromLocalStorage<number>(STORAGE_HOURS_KEY, 48);
 
 // Reactive Tasks Store Array
 export const tasks = writable<Task[]>(initialTasks);
-export const urgencyThreshold = writable<number>(48);
+export const urgencyThreshold = writable<number>(initialDueHours);
 
 // Derived Quadrants Logic
 export const quadrants = derived(tasks, ($tasks) => {
@@ -73,6 +77,9 @@ const debouncedSaveUrgentHours = debounce((value: number) => {
 // Subscribe For Persistence
 tasks.subscribe(($tasks) => {
 	debouncedSaveTasks($tasks);
+});
+urgencyThreshold.subscribe(($urgencyThreshold) => {
+	debouncedSaveUrgentHours($urgencyThreshold);
 });
 
 export const taskStore = {

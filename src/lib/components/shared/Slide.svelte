@@ -1,6 +1,6 @@
 <script lang="ts">
     import { derived } from 'svelte/store';
-    import { taskStore, quadrants } from '$lib/stores/taskStores';
+    import { taskStore } from '$lib/stores/taskStores';
     import TaskCard from "../TaskCard.svelte";
 
     // Access Props Via $props

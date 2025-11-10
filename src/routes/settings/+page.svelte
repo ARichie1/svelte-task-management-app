@@ -13,7 +13,7 @@
         urgencyThreshold.update(value => urgentHours);
     }
     const addNewCategory = () => {
-        console.log("category")
+        console.log("added a new category")
     }
 </script>
 

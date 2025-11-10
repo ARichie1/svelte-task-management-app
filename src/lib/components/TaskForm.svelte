@@ -68,7 +68,7 @@
     const fullDueDate = mergeDateTime(dueDate, dueTime);
 
     const newTask: Task = {
-      id: uuid(),
+      id: props.isEditing && props.taskToEdit ? props.taskToEdit : uuid(),
       title,
       description,
       priority: props.isAddingTo ? props.quadrantToAddTo?.priority : priority,

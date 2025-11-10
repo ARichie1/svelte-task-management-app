@@ -117,7 +117,9 @@
       checked={task.isComplete}
       onchange={() => {toggle(task.id)}}
     />
-    <h3 id={"title-" + task.id}>{task.title}</h3>
+    <h3 id={"title-" + task.id}>
+      <a href={`/tasks/${task.id}`}>{task.title}</a>
+    </h3>
   </header>
 
   {#if dueStatus !== "normal"}
@@ -135,7 +137,7 @@
   <div class="actions">
     <button class="btn" onclick={openMove} aria-label="Move task">🚀</button>
     <button class="btn" onclick={() => {openEdit(task.id)}} aria-label="Edit task">📝</button>
-    <button class="btn delete" onclick={() => {openDelete(task)}} aria-label="Delete task">🗑</button>
+    <button class="btn delete" onclick={() => {openDelete(task)}} aria-label="Delete task">🗑️</button>
   </div>
 
   <div class="due-date">

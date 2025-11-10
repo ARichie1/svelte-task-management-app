@@ -71,7 +71,7 @@
     </div>
 
     <div class="deleteAllTasks">
-      <button class="btn delete" onclick={() => {openDelete()}} aria-label="Delete All Tasks">🗑</button>
+      <button class="btn" onclick={() => {openDelete()}} aria-label="Delete All Tasks">🗑️</button>
     </div>
 
     {#if $filterPanelState}
