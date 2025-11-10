@@ -9,7 +9,7 @@
 </script>
 
 <header class="app-header" aria-label="banner">
-  <div class="title">Task Manager</div>
+  <div class="title"><a href="/" aria-label="app-title">Task Manager</a></div>
 
   <Menu menu_class="media-mode desktop-mode" closeMobileMenu={props.closeMobileMenu}/>
 

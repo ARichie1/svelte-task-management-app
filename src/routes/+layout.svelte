@@ -1,6 +1,6 @@
 <script lang="ts">
 	import "../app.css"
-	import { mobileMenuState } from "$lib/stores/uiStore";
+	import { mobileMenuState, mobileTaskActionsMenuState } from "$lib/stores/uiStore";
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import Header from '$lib/components/Header.svelte';
 
@@ -11,6 +11,7 @@
 	}
 	let toggleMobileMenu = () => {
 		mobileMenuState.update(value => !value);
+		mobileTaskActionsMenuState.update(value => false);
 	}
 </script>
 

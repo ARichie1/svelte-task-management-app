@@ -5,6 +5,7 @@
     import { onMount } from 'svelte';
     import { derived } from 'svelte/store';
     import { taskStore, urgencyThreshold } from '$lib/stores/taskStores';
+    import { mobileTaskActionsMenuState } from '$lib/stores/uiStore';
     import TaskForm from '$lib/components/TaskForm.svelte';
     import Modal from '$lib/components/shared/Modal.svelte';
     import ConfirmDelete from '$lib/components/shared/ConfirmDelete.svelte';
@@ -34,6 +35,13 @@
         if (value) {taskIsAvailable = true}
     });
 
+    const toggleMobileActionMenu = () => {
+        mobileTaskActionsMenuState.update(value => !value)
+    }
+    const closeMobileActionMenu = () => {
+        mobileTaskActionsMenuState.update(value => false)
+    }
+
     // Closes and Resets Modal
     let handleCancel = () => {
         showModal = false
@@ -44,16 +52,19 @@
     const openMove = () => {
         moving = true; 
         showModal = true;
+        closeMobileActionMenu()
     }
     const openEdit = () => {
         if (!$task) return 
         editing = true; 
         taskToEdit = $task.id;
         showModal = true;
+        closeMobileActionMenu()
     }
     const openDelete = () => { 
         deleting = true;  
         showModal = true; 
+        closeMobileActionMenu()
     }
 
     // Callbacks, Fast Implementations Directly In The Tasks Store
@@ -61,6 +72,7 @@
         if ($task) {
             taskStore.toggleCompletionOptimistic($task.id);
         }
+        closeMobileActionMenu()
     }
 
     const moveTask = (id:string, newPriority:string) => {
@@ -131,8 +143,8 @@
                     <button class="btn" onclick={openEdit}>📝</button>
                     <button class="btn" onclick={openDelete}>🗑️</button>
                 </div>
-                <div class="action-menu-btn"><button class="btn" onclick={() => showActionsMenu = !showActionsMenu}>🟣</button></div>
-                <div class="actions mobile" class:slide-left={showActionsMenu}>
+                <div class="action-menu-btn"><button class="btn" onclick={() => toggleMobileActionMenu()}>🟣</button></div>
+                <div class="actions mobile" class:slide-left={$mobileTaskActionsMenuState}>
                     <button class="btn" onclick={openMove}>🚀</button>
                     <button class="btn" onclick={openEdit}>📝</button>
                     <button class="btn" onclick={openDelete}>🗑️</button>
