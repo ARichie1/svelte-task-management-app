@@ -65,8 +65,8 @@ input { border: var(--input-border);}
 
 /* Priorities */
 .high{color: red}
-.medium{color: orangered}
-.low{color: yellow}
+.medium{color: rgb(255, 30, 0)}
+.low{color: orangered}
 .verylow{color: green}
 
 /* Scroll */
@@ -902,7 +902,11 @@ textarea {
         transition: all 0.5s ease;
     }
     .task-singlepage-header .actions button{
-        background: var(--gradient);
+        width: 40px; height: 40px;
+        background: var(--backdrop);
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     .task-singlepage-body .multi-property{
         grid-template-columns: 1fr;
