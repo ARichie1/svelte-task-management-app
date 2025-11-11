@@ -180,7 +180,7 @@
         <div class="task-singlepage-body">
             <div class="task-property">
                 <h4>Description</h4>
-                <p>{$task.description || 'No description provided.'}</p>
+                <p class="task-desc">{$task.description || 'No description provided.'}</p>
             </div>
 
             <div class="task-property">

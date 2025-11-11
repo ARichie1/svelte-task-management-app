@@ -76,7 +76,13 @@
       isImportant: false, quadrant: "",
       quadrant_title: ""
     };
-  }); 
+  });
+  
+  // Helps Reduce The Text Content
+  const truncateText = (text:string, maxLength:number) => {
+    if (text.length <= maxLength) return text;
+    return text.slice(0, maxLength).replace(/\s+\S*$/, '') + '...';
+  }
 
   // Use Reactive Variable To Keep Track Of The Time and Status
   let dueStatus = $state<"normal" | "dueSoon" | "overdue">("normal");
@@ -132,7 +138,7 @@
     </div>
   {/if}
   
-  <p class="task-desc">{task.description}</p>
+  <p class="task-desc">{truncateText(task.description, 20)}</p>
   
   <div class="actions">
     <button class="btn" onclick={openMove} aria-label="Move task">🚀</button>
