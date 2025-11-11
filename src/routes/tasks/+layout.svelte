@@ -15,7 +15,11 @@
 
 <div class="tasks-page-wrapper">
     <div class="tasks-page-header">
-        <h4><span class="minize-head">Available</span> Tasks | <span>{$tasks.length}</span></h4>
+        <h4>
+            <a href="/tasks" aria-label="task-shortcut">
+                <span class="minize-head">Available</span> Tasks | <span>{$tasks.length}</span>
+            </a>
+        </h4>
         <div class="right-side">
             <h4>Completed | {$completionPercentage}%</h4>
             <button class="btn" onclick={openAddTask}>Add <span class="minize-head">A New Task</span></button>
