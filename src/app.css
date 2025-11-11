@@ -278,6 +278,7 @@ input { border: var(--input-border);}
     justify-content: space-evenly;
     flex-direction: column;
     gap: 10px;
+    transition: all 0.5s ease-in-out;
 }
 .sidebar .sb-menu ul li a:hover { color: var(--accent-color); }
 
@@ -811,10 +812,11 @@ textarea {
     width: 100%; height: auto;
     padding: 5px; 
     margin-top: 15px;
+    padding-top: 10px;
+    border-radius: 6px;
+    background: var(--backdrop);
     overflow: hidden;
     overflow-y: hidden;
-    background: var(--backdrop);
-    border-radius: 6px;
 }
 .task-singlepage-header{
     position: relative;

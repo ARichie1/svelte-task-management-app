@@ -32,10 +32,10 @@
   </div>
 
   <div class="sb-section sb-menu">
-    {#if !openSidebar}
-      <h4><span>📑</span></h4>
-    {:else}
-      <h4 class="openedSidebar"><span>📑</span>Menu</h4>
+      <h4 class="openedSidebar">
+        <span>📑</span>{#if openSidebar}Menu{/if}
+      </h4>
+      {#if openSidebar}
       <ul class="navigation">
         <li><a href="/" class="nav-link">Dashboard</a></li>
         <li><a onclick={() => selectedCategories.update(list => [])} href="/tasks" class="nav-link">All Tasks</a></li>
@@ -44,10 +44,10 @@
     {/if}
   </div>
   <div class="sb-section categories">
-    {#if !openSidebar}
-      <h4><span>📂</span></h4>
-    {:else}
-      <h4 class="openedSidebar"><span>📂</span>Categories</h4>
+    <h4 class="openedSidebar">
+      <span>📂</span>{#if openSidebar}Categories{/if}
+    </h4>
+    {#if openSidebar}
       <ul>
         {#each categories as category}
           <li>
@@ -59,10 +59,9 @@
     {/if}
   </div>
   <div class="sb-section meta">
-    {#if !openSidebar}
-      <h4><span>{$tasks.length}</span></h4>
-    {:else}
-      <h4 class="openedSidebar"><span>{$tasks.length}</span>Tasks Currently</h4>
-    {/if}
+      <h4 class="openedSidebar">
+        <span>{$tasks.length}</span>
+        {#if openSidebar}Tasks Currently{/if}
+      </h4>
   </div>
 </nav>
