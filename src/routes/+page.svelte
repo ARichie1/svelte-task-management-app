@@ -10,10 +10,6 @@
     let showModal = $state(false)
     const handleCancel = () => {showModal = false}
     const openAddTask = () => {showModal = true;}
-
-    $effect(() => {
-        console.log($pageWidth);
-    })
 </script>
 
 <svelte:head>

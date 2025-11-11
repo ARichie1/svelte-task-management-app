@@ -59,7 +59,7 @@
         align-items: center;
         text-align: center;
         text-transform: uppercase;
-        background: ghostwhite;
+        background: var(--backdrop);
         border-radius: 5px;
     }
     .quadrant-list{
@@ -71,6 +71,7 @@
     }
     .quadrant-list li{
         width: auto; height: 30px;
+        background: var(--backdrop);
     }
     .quadrant-list button{
         height: 100%; width: 100%;
