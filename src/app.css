@@ -190,6 +190,7 @@ input { border: var(--input-border);}
     } 
 }
 
+/* App Body */
 .page-content-overlay{
     width: 100%; height: 100%;
     position: absolute;
@@ -205,19 +206,21 @@ input { border: var(--input-border);}
     left: 0%;
     transition: all 0.5s ease;
 }
+
 /* Below Header */
 .page-content{
     width: 100%; height: 100%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: flex-start;
 }
 
 /* Sidebar */
 .sidebar {
     position: relative;
-    width: 60px; height: 87vh;
+    height: 87vh;
     display: flex;
+    flex-basis: 8%; 
     justify-content: space-evenly;
     align-items: left;
     flex-direction: column;
@@ -226,7 +229,7 @@ input { border: var(--input-border);}
     background: var(--sidebar-bg);
     box-shadow: var(--shadow);
     font-weight: 600;
-    transition: width 0.5s ease;
+    transition: flex-basis 0.5s ease;
 }
 .sidebar h4 {
     display: flex;
@@ -294,19 +297,15 @@ input { border: var(--input-border);}
     color: var(--meta-color); 
 }
 .move {
-    width: 200px;
-    transition: width 0.5s ease;
+    flex-basis: 22%;
+    transition: flex-basis 0.5s ease;
 }
 .rotateBtn{
     rotate: -180deg;
     transition: rotate 0.5s ease;
 }
-@media screen and (max-width: 770px) {
-    .sidebar {
-        width: 100%;
-        flex-direction: column !important;
-        display: none;
-    }
+@media screen and (max-width: 900px) {
+    .sidebar {display: none;}
     .sb-section{width: 100%;}
     .sb-section ul{
         width: 100%; 
@@ -321,12 +320,13 @@ input { border: var(--input-border);}
 
 /* Matrix Grid */
 .matrix-container{
+    height:90vh;
     display: flex;
     flex-direction: column;
-    flex-basis: 90vw;
-    width: 100%; height:90vh;
+    flex-basis: 100%;
     padding-left: 20px;
     z-index: 1;
+    transition: flex-basis 0.5s ease;
 }
 .matrix-container h2{
     margin: 0;
@@ -405,11 +405,12 @@ input { border: var(--input-border);}
 .quadrant h3 { margin-top: 0; font-size: 1.1rem; }
 
 @media screen and (max-width: 749px) {
-    .matrix-grid { 
-        grid-template-columns: 2fr;
-    }
     .matrix-container {  
         padding-left: 0px;
+        flex-basis: 100%;
+    }
+    .matrix-grid { 
+        grid-template-columns: 2fr;
     }
 }
 @media screen and (max-width: 420px) {
@@ -656,7 +657,8 @@ textarea {
 
 /* Tasks Page */
 .tasks-page-wrapper{
-    width: auto; height:90vh;
+    width: 100%; height:90vh;
+    margin-left: 10px;
     overflow-y: hidden;
 }
 .tasks-page-header{
@@ -806,11 +808,13 @@ textarea {
 
 /* Single Task Page */
 .task-singlepage-container{
-    width: 87vw; height: auto;
+    width: 100%; height: auto;
     padding: 5px; 
     margin-top: 15px;
     overflow: hidden;
     overflow-y: hidden;
+    background: var(--backdrop);
+    border-radius: 6px;
 }
 .task-singlepage-header{
     position: relative;
@@ -905,13 +909,13 @@ textarea {
     }
     .task-singlepage-header .actions button{
         width: 40px; height: 40px;
-        background: var(--backdrop);
+        background: var(--meta-color);
         display: flex;
         justify-content: center;
         align-items: center;
     }
-    .task-singlepage-body .multi-property{
-        grid-template-columns: 1fr;
+    .task-singlepage-header .actions button:hover{
+        background: var(--gradient);
     }
 }
 
@@ -927,7 +931,6 @@ textarea {
     justify-content: space-between;
     align-items: center;
     padding-left: 0;
-    margin-left: 10px;
 }
 .settings-page-body{
     width: 100%; height: 100%;

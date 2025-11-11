@@ -2,7 +2,8 @@
   import { goto } from '$app/navigation';
   import { tasks } from '$lib/stores/taskStores';
   import { selectedCategories } from '$lib/utils/findTasks';
-    
+  import { sidebarWidth, pageWidth } from '$lib/stores/uiStore';
+
   const categories = ['All', 'Work', 'Personal', 'Finance'];
 
   const selectCategory = (category: string) => {
@@ -14,12 +15,20 @@
   }
 
   let openSidebar = $state(false)
+
+  const toggleSidebar = () => {
+    openSidebar = !openSidebar
+    sidebarWidth.update(value => value === 8 ? 22 : 8)
+    pageWidth.update(value => 100)
+  }
 </script>
 
-
-<nav class="sidebar" class:move={openSidebar} aria-label="Main navigation">
+<nav class="sidebar" 
+  style="flex-basis: {$sidebarWidth}%;"
+  class:move={openSidebar} aria-label="Main navigation">
   <div class="side-menu-btn-container">
-    <button class="side-menu-btn" class:rotateBtn={openSidebar} onclick={() => openSidebar = !openSidebar}>💨</button>
+    <button class="side-menu-btn" class:rotateBtn={openSidebar} 
+      onclick={() => toggleSidebar()}>💨</button>
   </div>
 
   <div class="sb-section sb-menu">

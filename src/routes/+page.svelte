@@ -5,17 +5,22 @@
     import MatrixQuadrant from '$lib/components/MatrixQuadrant.svelte';
     import Modal from '$lib/components/shared/Modal.svelte';
     import TaskForm from '$lib/components/TaskForm.svelte';
+    import { pageWidth } from '$lib/stores/uiStore';
 
     let showModal = $state(false)
     const handleCancel = () => {showModal = false}
     const openAddTask = () => {showModal = true;}
+
+    $effect(() => {
+        console.log($pageWidth);
+    })
 </script>
 
 <svelte:head>
   <title>Svelte Task Management App</title>
 </svelte:head>
 
-<div class="matrix-container">
+<div class="matrix-container" style="flex-basis: {$pageWidth}%;">
     <div class="matrix-container-header">
         <h2>Completed | {$completionPercentage}%</h2>
         <div><button class="btn add" onclick={openAddTask}>Add A New Task</button></div>
