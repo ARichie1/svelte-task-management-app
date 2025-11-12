@@ -32,20 +32,20 @@
     --secondary-color: #764ba2;
     --accent-color: #f6ad55;
     --header-bg: #ffffff;
-    --sidebar-bg: #ffffff;
+    --sidebar-bg: #000;
     --text-color: #fff;
     --link-color: #667eea;
     --add: rgb(9, 153, 9);
     --delete: rgb(241, 39, 39);
     --progress-color: #764ba2;
-    --backdrop: rgb(34, 34, 36);
+    --backdrop: rgb(11, 11, 14);
     --meta-color: #888;
     --card-bg: #000;
     --border-radius: 0.5rem;
     --input-bg: #0f0f0f;
     --input-border: 1px solid #ccc;
     --transition-speed: 0.3s;
-    --shadow: 0 2px 8px rgba(0,0,0,0.1);
+    --shadow: 0 2px 2px rgba(233, 233, 233, 0.1);
     --gradient: linear-gradient(130deg,  #8b5cf6, #111827, #111827, #4f46e5);
 }
 
@@ -306,6 +306,7 @@ input, select, textarea {
 .sidebar .sb-menu {
     font-weight: 600;
     padding: 0.5rem 0;
+    color: var(--text-color);
     transition: color var(--transition-speed);
     font-weight: lighter;
 }
@@ -324,6 +325,8 @@ input, select, textarea {
     border: none;
     padding: 0.3rem 0;
     font-size: 0.95rem;
+    
+    color: var(--text-color);
     transition: color var(--transition-speed);
     cursor: pointer;
 }
@@ -999,7 +1002,7 @@ textarea {
     padding: 0.5rem 1rem; 
     border-radius: var(--border-radius); 
     border: none; 
-    background: var(--primary-color); 
+    background: var(--backdrop); 
     color: #fff; 
 }
 
