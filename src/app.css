@@ -489,12 +489,16 @@ input, select, textarea {
     font-size: 100%;
     line-height: 1rem;
     cursor: pointer;
-    background: transparent;
-    background: var(--sidebar-bg);
+    color: var(--text-color);
+    background: var(--card-bg);
     box-shadow: var(--shadow);
     transition: background 0.2s;
     z-index: 2;
     user-select: none;
+}
+.nav-btn:hover {
+    color: var(--card-bg);
+    background: var(--text-color);
 }
 .empty-tasks{
     min-width: 100% !important;
@@ -604,7 +608,9 @@ input, select, textarea {
     font-weight: bold;
     background: var(--backdrop)
 }
-
+.task-card .actions button:hover {
+    background: var(--gradient);
+}
 /* Task Form */
 .modal h3{
     display: flex;
