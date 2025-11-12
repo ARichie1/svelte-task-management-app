@@ -155,7 +155,8 @@ input, select, textarea {
     text-decoration: none;
 }
 .app-header ul li button{
-    width: 30px; height: 30px;
+    width: 100%; height: 30px;
+    background: transparent !important;
 }
 .app-header ul .progress{
     font-weight: bold;
