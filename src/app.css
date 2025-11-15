@@ -807,6 +807,16 @@ textarea {
     flex-basis: 33%;
 }
 
+.reset-filters{
+    position: absolute;
+    right: 2%; top: 3%;
+    height: 30px;
+}
+.reset-filters button{
+    height: 100%; width: 100%;
+    cursor: pointer;
+}
+
 .tasks-page-body-container 
 .find .find-by .filter{
     flex-basis: 50%;
@@ -846,7 +856,16 @@ textarea {
     .tasks-page-body-container .tasks-list{
         grid-template-columns: 1fr 1fr;
     }
-    
+    .tasks-page-body-container .find .find-by{
+        height: auto;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 10px;
+    }
+    .find-by-section{
+        width: 100%;
+    }
     .minize-head{display: none;}
     .right-side{flex-basis: 74%;}
     .right-side h4{flex-basis: 70%;}

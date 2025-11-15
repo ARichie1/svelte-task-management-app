@@ -31,6 +31,20 @@
       })
   );
 
+  let resetFilters = () => {
+    searchQuery.set('');
+    filterCompletion.set(false);
+    filterHigh.set(false);
+    filterMedium.set(false);
+    filterLow.set(false);
+    filterVeryLow.set(false);
+    selectedCategories.set([]);
+    sortOption.set('Time');
+    
+    // Close The Filter Panel
+    filterPanelState.set(false);
+  };
+
   let toggleFilterPanel = () => {
 		filterPanelState.update(value => !value);
 	}
@@ -119,6 +133,9 @@
               <option>Priority VeryLow-High</option>
             </select>
           </div>
+        </div>
+        <div class="reset-filters">
+          <button class="btn" onclick={resetFilters}>Reset</button>
         </div>
       </div>
     {/if}
