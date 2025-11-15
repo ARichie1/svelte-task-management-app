@@ -50,6 +50,13 @@
                 </a>
             </li>
         {/each}
-        <li><button class="btn dark-toggle" onclick={toggleTheme}>{theme === 'light' ? '🌙' : '☀️'}</button></li>
+        <li>
+            <button class="btn dark-toggle" 
+                onclick={() => {
+                    toggleTheme();
+                    $mobileMenuState ? props.closeMobileMenu?.() : null;}}>
+                {theme === 'light' ? '🌙' : '☀️'}
+            </button>
+        </li>
       </ul>
 </nav>
