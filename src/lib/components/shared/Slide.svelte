@@ -50,7 +50,7 @@
     aria-label="Task slider"
   >
     {#each $tasks as task (task.id)}
-      <TaskCard {task} />
+      <TaskCard taskId={task.id} />
     {:else}
       <div class="empty-tasks">
         <p>No Task Here Yet.</p>

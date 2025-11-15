@@ -129,7 +129,7 @@
   {:else}
     <div class="tasks-list scrollable">
       {#each $filteredTasks as task (task.id)}
-        <TaskCard {task} />
+        <TaskCard taskId={task.id} />
       {/each}
     </div>
   {/if}

@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { derived, get } from 'svelte/store';
   import { formatDistanceToNow, parseISO, differenceInHours } from 'date-fns';
   import { tasks, taskStore, urgencyThreshold } from '$lib/stores/taskStores';
   import type { Task } from '$lib/stores/types';
@@ -12,9 +13,16 @@
   import TaskForm from './TaskForm.svelte';
   
   // Access props via $props
-  const props = $props<{task: Task;}>();
+  const props = $props<{taskId: string;}>();
 
-  const task = props.task;
+  // Load The Task Reactively Based On The ID Parameter In The Route
+  const task = derived(taskStore, $tasks =>
+      $tasks.find(t => t.id === props.taskId)
+  );
+
+  // const task = props.task;
+  let isLoading = $state(true)
+  let taskIsAvailable = $state(false)
 
   let showModal = $state(false)
 
@@ -90,9 +98,10 @@
 
   // Calculation The Task Urgency Based Priority and Due Date
   const updateDueStatus = () => {
-    if (!task.dueDate) return;
+    if (!$task) return
+    if (!$task.dueDate) return;
 
-    const due = parseISO(task.dueDate);
+    const due = parseISO($task.dueDate);
     const hoursLeft = differenceInHours(due, new Date());
     timeRemaining = formatDistanceToNow(due, { addSuffix: true });
 
@@ -107,68 +116,95 @@
     const interval = setInterval(updateDueStatus, 5 * 60 * 1000);
     return () => clearInterval(interval);
   });
+
+    // Handle Loading State Properly
+  onMount(() => {
+    const unsubscribe = task.subscribe((value) => {
+        if (value) {taskIsAvailable = true} 
+        // From Here We Now Know task is undefined But
+        else {
+            // Check If Tasks (taskstore) Have Even Loaded Before 
+            // Deciding If The Tasks Does Not Actual Exist.
+            const allTasks = get(taskStore)
+
+            // If taskStore Has Been Loaded and The Task Is Still Undefined
+            // That Means The taskId Does Not Exist, So The 404 Can Be Shown
+            if (allTasks.length > 0) taskIsAvailable = false
+        }
+        isLoading = false;
+    })
+    return unsubscribe;
+  })
 </script>
 
-<article
-  class="task-card"
-  aria-labelledby={"title-" + task.id}
-  in:fly={{ y: 8, duration: 200 }}
-  out:fade={{ duration: 150 }}
->
-  <header class="task-head">
-    <input
-    class="check-box"
-      aria-label="Toggle task completion"
-      type="checkbox"
-      checked={task.isComplete}
-      onchange={() => {toggle(task.id)}}
-    />
-    <h3 id={"title-" + task.id}>
-      <a href={`/tasks/${task.id}`}>{task.title}</a>
-    </h3>
-  </header>
 
-  {#if dueStatus !== "normal"}
-    <div class="critically-urgent flags">
-      {#if dueStatus === "dueSoon"}
-          <p class="due-soon">Due Soon</p> 
-      {:else if dueStatus === "overdue"}
-          <p class="overdue">Overdue</p>
-        {/if}
+{#if isLoading}
+  <article class="task-card loading-container">
+    ... loading 
+  </article>
+{:else if taskIsAvailable && $task}
+  <article
+    class="task-card"
+    aria-labelledby={"title-" + $task.id}
+    in:fly={{ y: 8, duration: 200 }}
+    out:fade={{ duration: 150 }}
+  >
+    <header class="task-head">
+      <input
+      class="check-box"
+        aria-label="Toggle task completion"
+        type="checkbox"
+        checked={$task.isComplete}
+        onchange={() => {toggle($task.id)}}
+      />
+      <h3 id={"title-" + $task.id}>
+        <a href={`/tasks/${$task.id}`}>{$task.title}</a>
+      </h3>
+    </header>
+
+    {#if dueStatus !== "normal"}
+      <div class="critically-urgent flags">
+        {#if dueStatus === "dueSoon"}
+            <p class="due-soon">Due Soon</p> 
+        {:else if dueStatus === "overdue"}
+            <p class="overdue">Overdue</p>
+          {/if}
+      </div>
+    {/if}
+    
+    <p class="task-desc">{truncateText($task.description, 20)}</p>
+    
+    <div class="actions">
+      <button class="btn" onclick={openMove} aria-label="Move task">🚀</button>
+      <button class="btn" onclick={() => {openEdit($task.id)}} aria-label="Edit task">📝</button>
+      <button class="btn delete" onclick={() => {openDelete($task)}} aria-label="Delete task">🗑️</button>
     </div>
-  {/if}
-  
-  <p class="task-desc">{truncateText(task.description, 20)}</p>
-  
-  <div class="actions">
-    <button class="btn" onclick={openMove} aria-label="Move task">🚀</button>
-    <button class="btn" onclick={() => {openEdit(task.id)}} aria-label="Edit task">📝</button>
-    <button class="btn delete" onclick={() => {openDelete(task)}} aria-label="Delete task">🗑️</button>
-  </div>
 
-  <div class="due-date">
-    <p>Due: {new Date(task.dueDate).toLocaleString()}</p>
-  </div>
+    <div class="due-date">
+      <p>Due: {new Date($task.dueDate).toLocaleString()}</p>
+    </div>
 
-  <div class="priority">
-    <p>Priority: {task.priority} </p>
-    <p>Category: {task.category}</p>
-  </div>
-</article>
+    <div class="priority">
+      <p>Priority: {$task.priority} </p>
+      <p>Category: {$task.category}</p>
+    </div>
+  </article>
 
-<!-- Modal Used To ADD Or EDIT A Task -->
-<Modal open={showModal} onClose={handleCancel}>
-  {#if moving}
-    <MoveTask onCancel={handleCancel} onMove={moveTask} {task}/>
-  {:else if deleting}
-    <ConfirmDelete onCancel={handleCancel} onDelete={deleteTask} taskToDelete={task}/>
-  {:else}
-    <h3>{editing ? 'Edit Task' : 'Add A Task'}</h3>
-    <TaskForm
-      initial={initial()}
-      onCancel={handleCancel}
-      isEditing={editing}
-      {taskToEdit}
-    />
-  {/if}
-</Modal>
+
+  <!-- Modal Used To ADD Or EDIT A Task -->
+  <Modal open={showModal} onClose={handleCancel}>
+    {#if moving}
+      <MoveTask onCancel={handleCancel} onMove={moveTask} task={$task}/>
+    {:else if deleting}
+      <ConfirmDelete onCancel={handleCancel} onDelete={deleteTask} taskToDelete={$task}/>
+    {:else}
+      <h3>{editing ? 'Edit Task' : 'Add A Task'}</h3>
+      <TaskForm
+        initial={initial()}
+        onCancel={handleCancel}
+        isEditing={editing}
+        {taskToEdit}
+      />
+    {/if}
+  </Modal>
+{/if}

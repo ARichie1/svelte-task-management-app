@@ -86,7 +86,7 @@ export const taskStore = {
 	subscribe: tasks.subscribe,
 
   // Universal update method (alias for editTask)
-	update: (id: string, updates: Partial<Task>) => {
+	update: (id: string, updates:Task) => {
 		taskStore.editTask(id, updates);
 	},
 
@@ -96,13 +96,33 @@ export const taskStore = {
     	console.log("adding new task");
 	},
 
-  // Edit specific fields of a task
-	editTask: (id: string, updatedFields: Partial<Task>) => {
+//   // Edit specific fields of a task
+	// editTask: (id: string, updatedFields: Partial<Task>) => {
+	// 	tasks.update((current) =>
+	// 		current.map((t) => (t.id === id ? { ...t, ...updatedFields } : t))
+	// 	);
+    // 	console.log("edited a task");
+	// },
+
+	// editTask: (id: string, updatedTask: Task) => {
+	// 	console.log("editing a task");
+		
+	// 	tasks.update((current) => current.filter((t) => t.id !== id));
+    // 	console.log("deleted a task");
+
+	// 	tasks.update((current) => [...current, updatedTask]);
+    // 	console.log("adding new task");
+
+    // 	console.log("edited a task");
+	// },
+
+	editTask: (id: string, newTask: Task) => {
 		tasks.update((current) =>
-			current.map((t) => (t.id === id ? { ...t, ...updatedFields } : t))
+			current.map((t) => (t.id === id ? { ...newTask } : t))
 		);
-    	console.log("edited a task");
+		console.log("edited a task");
 	},
+
 
 	// Toggle completion
 	toggleCompletionOptimistic: (id: string) => {
